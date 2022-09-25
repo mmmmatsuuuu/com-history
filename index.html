@@ -5,11 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Com History</title>
-    <script defer src="./js/main.js"></script>
+
+    <link rel="stylesheet" href="./styles/main.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="./js/main.js" type="module"></script>
     
 </head>
-<body>
-    
-    
+<body class="max-w-7xl m-auto py-12">
+    <div class="relative my-12 h-32">
+        <div id="grad-bg" class="absolute top-0 left-0">
+        </div>
+        <div class="absolute top-0 left-0">
+            <h1 class="text-4xl font-black">コンピューターの性能</h1>
+            <p>コンピューターの性能はどのように向上してきたのでしょう？グラフ化して特徴を見てみましょう。</p>
+        </div>
+    </div>
+    <h2 class="text-2xl font-black text-amber-400 border-b-2 border-amber-400 mt-12">クロック周波数</h2>
+    <div id="clock_chart">
+        <div class="animate-pulse m-auto text-xl text-center h-96 flex justify-center items-center">
+            Loading
+        </div>
+    </div>
+    <h2 class="text-2xl font-black text-lime-400 border-b-2 border-lime-400 mt-12">コア数</h2>
+    <div id="core_chart">
+        <div class="animate-pulse m-auto text-xl text-center h-96 flex justify-center items-center">
+            Loading
+        </div>
+    </div>
+    <h2 class="text-2xl font-black text-sky-400 border-b-2 border-sky-400 mt-12">ビット幅</h2>
+    <div id="bitWidth_chart">
+        <div class="animate-pulse m-auto text-xl text-center h-96 flex justify-center items-center">
+            Loading
+        </div>
+    </div>
+    <h2 class="text-2xl font-black text-fuchsia-400 border-b-2 border-fuchsia-400 mt-12">メモリサイズ</h2>
+    <div id="memory_chart">
+        <div class="animate-pulse m-auto text-xl text-center h-96 flex justify-center items-center">
+            Loading
+        </div>
+    </div>
 </body>
 </html>
