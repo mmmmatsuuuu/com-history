@@ -69,3 +69,15 @@ export const generatetTooltipHtml = (d) => {
         `;
     return h;
 }
+
+/**
+ * 日付を年単位の少数で表示する。
+ * @param {dayjs Object} day 
+ */
+export const dayToYear = (day) => {
+    const year = day.format("YYYY") + "/01/01";
+    const startYear = dayjs(year);
+    const sub = day.unix() - startYear.unix();
+    const ratio = sub / (365 * 24 * 60 * 60);
+    return parseInt(day.format("YYYY")) + ratio;
+}

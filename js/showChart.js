@@ -1,11 +1,11 @@
-import { removePrefix, generatetTooltipHtml } from "./utils.js";
+import { removePrefix, generatetTooltipHtml, dayToYear } from "./utils.js";
 
 const ticks = [
     1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990,
     1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
     2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
     2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020,
-    2021, 2022
+    2021, 2022, 2023, 2024, 2025
 ]
 
 export const drawClockChart = (datas) => {
@@ -15,10 +15,13 @@ export const drawClockChart = (datas) => {
     data.addColumn({type: "string", role: "tooltip", p: {'html': true}});
     
     datas.map(d => {
-        var y = parseInt(d.release.format("YYYY"));
-        var h = generatetTooltipHtml(d);
-        var p = [y, removePrefix(d.cpu.clock, "dec"), h];
-        data.addRow(p);
+        var prefixed = removePrefix(d.cpu.clock, "dec");
+        var y = dayToYear(d.release);
+        if (typeof(prefixed) == "number" && y) {
+            var h = generatetTooltipHtml(d);
+            var p = [y, prefixed, h];
+            data.addRow(p);
+        }
     })
 
     const options = {
@@ -44,10 +47,12 @@ export const drawCoreChart = (datas) => {
     data.addColumn({type: "string", role: "tooltip", p: {'html': true}});
     
     datas.map(d => {
-        var y = parseInt(d.release.format("YYYY"));
-        var h = generatetTooltipHtml(d);
-        var p = [y, d.cpu.core, h];
-        data.addRow(p);
+        var y = dayToYear(d.release);
+        if (typeof(d.cpu.core) == "number" && y) {
+            var h = generatetTooltipHtml(d);
+            var p = [y, d.cpu.core, h];
+            data.addRow(p);
+        }
     })
 
     const options = {
@@ -73,10 +78,12 @@ export const drawBitWidthChart = (datas) => {
     data.addColumn({type: "string", role: "tooltip", p: {'html': true}});
     
     datas.map(d => {
-        var y = parseInt(d.release.format("YYYY"));
-        var h = generatetTooltipHtml(d);
-        var p = [y, d.cpu.bitWidth, h];
-        data.addRow(p);
+        var y = dayToYear(d.release);
+        if (typeof(d.cpu.bitWidth) == "number" && y) {
+            var h = generatetTooltipHtml(d);
+            var p = [y, d.cpu.bitWidth, h];
+            data.addRow(p);
+        }
     })
 
     const options = {
@@ -102,10 +109,13 @@ export const drawMemoryChart = (datas) => {
     data.addColumn({type: "string", role: "tooltip", p: {'html': true}});
     
     datas.map(d => {
-        var y = parseInt(d.release.format("YYYY"));
-        var h = generatetTooltipHtml(d);
-        var p = [y, removePrefix(d.memory.size, "bin"), h];
-        data.addRow(p);
+        var prefixed = removePrefix(d.memory.size, "bin");
+        var y = dayToYear(d.release);
+        if (typeof(prefixed) == "number" && y) {
+            var h = generatetTooltipHtml(d);
+            var p = [y, prefixed, h];
+            data.addRow(p);
+        }
     })
 
     const options = {
