@@ -12,22 +12,27 @@
  export const removePrefix = (amount, type) => {
     const prefix = ["K", "M", "G", "T", "P", "E"];
 
-    const temp = amount.split(/(K|M|G|T|P|E)/);
-    const a = Number(temp[0]);
-    const p = temp[1];
-    let n = 0;
-    while (p != prefix[n]) {
+    if (typeof(amount) == "string") {
+        const temp = amount.split(/(K|M|G|T|P|E)/);
+        const a = Number(temp[0]);
+        const p = temp[1];
+        let n = 0;
+        while (p != prefix[n]) {
+            n++;
+        }
         n++;
-    }
-    n++;
+        if (type === "dec") {
+            return Math.trunc(a * 1000 ** n);
+        } else if (type === "bin") {
+            return Math.trunc(a * 1024 ** n);
+        } else {
+            return amount;
+        }
 
-    if (type === "dec") {
-        return Math.trunc(a * 1000 ** n);
-    } else if (type === "bin") {
-        return Math.trunc(a * 1024 ** n);
     } else {
-        return amount;
+        return 0;
     }
+
 }
 
 /**

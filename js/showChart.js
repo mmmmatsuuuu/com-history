@@ -8,7 +8,7 @@ const ticks = [
     2021, 2022, 2023, 2024, 2025
 ]
 
-export const drawClockChart = (datas) => {
+export const drawClockChart = async(datas) => {
     const data = new google.visualization.DataTable();
     data.addColumn("number", "year");
     data.addColumn("number", "Hz");
@@ -17,12 +17,12 @@ export const drawClockChart = (datas) => {
     datas.map(d => {
         var prefixed = removePrefix(d.cpu.clock, "dec");
         var y = dayToYear(d.release);
-        if (typeof(prefixed) == "number" && y) {
+        if (typeof(prefixed) == "number" && prefixed != 0 && y) {
             var h = generatetTooltipHtml(d);
             var p = [y, prefixed, h];
             data.addRow(p);
         }
-    })
+    });
 
     const options = {
         height: 600,
@@ -34,6 +34,7 @@ export const drawClockChart = (datas) => {
         pointSize: 8,
         tooltip: {isHtml: true},
     };
+
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.ScatterChart(document.getElementById('clock_chart'));
@@ -48,7 +49,7 @@ export const drawCoreChart = (datas) => {
     
     datas.map(d => {
         var y = dayToYear(d.release);
-        if (typeof(d.cpu.core) == "number" && y) {
+        if (typeof(d.cpu.core) == "number" && d.cpu.core != 0 && y) {
             var h = generatetTooltipHtml(d);
             var p = [y, d.cpu.core, h];
             data.addRow(p);
@@ -79,7 +80,7 @@ export const drawBitWidthChart = (datas) => {
     
     datas.map(d => {
         var y = dayToYear(d.release);
-        if (typeof(d.cpu.bitWidth) == "number" && y) {
+        if (typeof(d.cpu.bitWidth) == "number" && d.cpu.bitWidth != 0 && y) {
             var h = generatetTooltipHtml(d);
             var p = [y, d.cpu.bitWidth, h];
             data.addRow(p);
@@ -111,7 +112,7 @@ export const drawMemoryChart = (datas) => {
     datas.map(d => {
         var prefixed = removePrefix(d.memory.size, "bin");
         var y = dayToYear(d.release);
-        if (typeof(prefixed) == "number" && y) {
+        if (typeof(prefixed) == "number" && prefixed != 0 && y) {
             var h = generatetTooltipHtml(d);
             var p = [y, prefixed, h];
             data.addRow(p);

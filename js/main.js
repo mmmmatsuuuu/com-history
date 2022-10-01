@@ -3,11 +3,8 @@
  * ここに実行したい処理を書く。処理に必要な機能は別ファイル化する。
  ======================================================================== */
 
-import { dummies } from "./dummy.js";
 import { drawClockChart, drawCoreChart, drawBitWidthChart, drawMemoryChart } from "./showChart.js";
-import { myFetcher } from "./fetcher.js";
-
-const FETCH_URL = "https://script.google.com/macros/s/AKfycbyANlLhTKZpl6sPbZhfo26lfvaPCBxySW_H50ecps04i3BLns8iunvIZ-p7evCfZA-Y/exec";
+import { lengthFetcher, dataFetcher } from "./fetcher.js";
 
 /**
  * DOMContentLoadedはDOMツリー構築完了直後、画像ファイルなどの外部リソースが読み込まれる
@@ -22,14 +19,23 @@ const FETCH_URL = "https://script.google.com/macros/s/AKfycbyANlLhTKZpl6sPbZhfo2
  * 画像ファイルの外部リソースのロードなどすべて完了した時点でスクリプトが実行される。
  */
 window.onload = async function () {
-    const datas = await myFetcher(FETCH_URL);
+    // データ変数
+    const datas = [];
 
-    // Load the Visualization API and the corechart package.
+    // データ数の取得
+    const len = await lengthFetcher();
+
+    // // Load the Visualization API and the corechart package.
     google.charts.load('current', {'packages':['corechart']});
 
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(() => drawClockChart(datas));
-    google.charts.setOnLoadCallback(() => drawCoreChart(datas));
-    google.charts.setOnLoadCallback(() => drawBitWidthChart(datas));
-    google.charts.setOnLoadCallback(() => drawMemoryChart(datas));
+    for (let i = 1; i <= len; i++) {
+        var d = await dataFetcher(i);
+        
+        datas.push(d);
+        // // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(() => drawClockChart(datas));
+        google.charts.setOnLoadCallback(() => drawCoreChart(datas));
+        google.charts.setOnLoadCallback(() => drawBitWidthChart(datas));
+        google.charts.setOnLoadCallback(() => drawMemoryChart(datas));
+    }
 };
